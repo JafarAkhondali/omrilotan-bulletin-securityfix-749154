@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+        <!-- don't cache me -->
+        <meta http-equiv="Cache-Control" content="no-cache" />
+        <!-- don't index me (please) -->
+        <meta name="robots" content="noindex" />
+        <meta name="googlebot" content="noindex" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />
+
+        <title>Notification Tester</title>
+        <style>
+pre {
+    margin:1em;
+    padding:.25em;
+    background:#454545;
+    color:#eee;
+    border-radius:.5em;
+}
+pre i {
+    color:#0c0;
+}
+button {
+    display:block;
+    width:50%;
+    height:4em;
+    line-height:4em;
+    margin:0 auto;
+}
+.report {
+    white-space:pre;
+    padding:.25em;
+    border:1px solid #ccc;
+}
+        </style>
+    </head>
+    <body>
+        <pre><i>// Everything is optional!</i>
+bulletin({
+    title: "Message Title",
+    image: "q.png",
+    message: "Message body",
+    timer: 5000,
+    onclose: function () {
+        <i>// what to do when it is closed</i>
+    },
+    onclick: function () {
+        <i>// what to do on click</i>
+    }
+});</pre>
+        <button>Notify!</button>
+        <p style="text-decoration:underline;">Reports:</p>
+        <p id="events" class="report"></p>
+        <script src="bulletin.js"></script>
+        <script>
+var events = document.getElementById("events");
+bulletin.autocheck();
+var i = 0;
+document.getElementsByTagName("button")[0].onclick = function () {
+    bulletin({
+        title: "Hello (" + ++i + ")",
+        image: "q.png",
+        message: [
+            "This is a multi lined message",
+            "you can write text here",
+            "",
+            "and drop lines with \"\\n\""
+        ].join("\n"),
+        timer: 5000,
+        onclose: function bulletinClosed () {
+            events.innerHTML = "Closed\n" + events.innerHTML;
+        },
+        onclick: function baloonCallback () {
+            events.innerHTML = "Click\n" + events.innerHTML;
+        }
+    });
+};
+        </script>
+    </body>
+</html>
